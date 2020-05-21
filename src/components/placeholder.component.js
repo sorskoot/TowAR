@@ -12,7 +12,7 @@ export default AFRAME.registerComponent('placeholder', {
                 this.occupied = false;                
                 entity.setAttribute("mixin", "placeholder");
             } else {
-                entity.setAttribute("mixin", "room0");
+                entity.setAttribute("mixin", "commercial");
                 this.occupied = true;
             }
             this.el.appendChild(entity);
