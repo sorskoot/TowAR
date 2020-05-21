@@ -1,2 +1,45 @@
-# just an empty todo
-☐ @critical Create a todo list
+SimTower Clone in Web VR/AR
+
+View Modes:
+    - Full view from the outside
+    - Full view from without outside wall on the front
+    - Tower up to a specific floor
+
+Build: 
+    ☐ Lobby         @V1
+    ✔ Residential   @V1 @done(20-05-21 21:49)
+    ☐ Commercial    @V1
+    ☐ Hotel         @V2
+    ☐ Restaurant    @V2
+    ☐ Office        @V1
+
+    ✔ Elevator      @V1 @done(20-05-21 21:49)
+    ☐ Escalator     @V2
+    ☐ Stairs        @V2
+
+    ☐ Entrance at bottom floor @V1 
+    ☐ Outer walls @V1
+    
+
+- Start with basic floor plan(lobby) 7x7, elevator in the center
+
+V1 -> Tower of colored cubes.
+
+Every type of `build` has properties like
+    noise they generate, noise they can stand
+    need for X people
+    Entertainment level    
+    Maintainance costs
+    Different size
+    Combination of these determains price.
+    
+Clock that runs daycycle (maybe in different speeds)
+    
+
+
+------------------
+Links and Ideas
+------------------
+https://coolors.co/app
+
+Similar game is available => Skytropolis

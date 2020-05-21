@@ -19,13 +19,19 @@
             <a-mixin id="placeholder" mixin="voxel-scale" obj-model="obj: models/towar-0.obj; mtl: #voxel-mtl"></a-mixin>
             <a-mixin id="room0" obj-model="obj: models/towar-1.obj; mtl: #voxel-mtl"
                         mixin="voxel-scale"></a-mixin>
+            <a-mixin id="elevator" obj-model="obj: models/towar-2.obj; mtl: #voxel-mtl"
+                        mixin="voxel-scale"></a-mixin>
+            <a-mixin id="addfloor" obj-model="obj: models/towar-3.obj; mtl: #voxel-mtl"
+                        mixin="voxel-scale"></a-mixin>
         </a-assets>
 
-        <a-entity scale=".3 .3 .3" position="0 1 -1">
-            <a-entity floor></a-entity>
+        <a-entity tower scale=".3 .3 .3" rotation="0 180 0" position="0 1 -1">
+            <a-entity position="0 .5 0" add-floor></a-entity>
+            <a-entity floor="level:0"></a-entity>            
         </a-entity>
 
-        <a-entity camera wasd-controls look-controls="pointerLockEnabled:true" position="0 1.7 0">
+        <a-entity camera wasd-controls 
+            look-controls="pointerLockEnabled:true;touchEnabled:true" position="0 1.7 0">
             <a-entity cursor="fuse: false;" material="color: black; shader: flat" position="0 0 -.5"
                 geometry="primitive: ring;radiusInner: 0.007; radiusOuter: 0.009"></a-entity>
         </a-entity>

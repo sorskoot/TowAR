@@ -1,7 +1,8 @@
 AFRAME.registerComponent('floor', {
     schema: {
         width: { default: 7 },
-        depth: { default: 7 }
+        depth: { default: 7 },
+        level: { default: 0 }
     },
     init: function () {
         this.createFloor();
@@ -13,8 +14,12 @@ AFRAME.registerComponent('floor', {
             for (let z = 0; z < this.data.depth; z++) {
                 const container = document.createElement("a-entity");
                 const placeholder = document.createElement("a-entity");
-                placeholder.setAttribute("mixin", "placeholder");
-                container.setAttribute("placeholder", "");
+                if(x==3 && z == 3){
+                    placeholder.setAttribute("mixin", "elevator");
+                }else{
+                    placeholder.setAttribute("mixin", "placeholder");
+                    container.setAttribute("placeholder", "");
+                }
                 container.appendChild(placeholder);
 
                 const xpos = (this.el.object3D.position.x -
@@ -23,9 +28,9 @@ AFRAME.registerComponent('floor', {
                     (this.data.depth / 2.0) + z;
                 
                     container.setAttribute("position", {
-                    x: xpos,
-                    y: this.el.object3D.position.y,
-                    z: zpos
+                    x: xpos+.5,
+                    y: this.el.object3D.position.y + this.data.level * .5,
+                    z: zpos+.5
                 });
                 this.el.appendChild(container);
             }
