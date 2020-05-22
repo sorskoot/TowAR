@@ -25,13 +25,13 @@ Build:
 
 V1 -> Tower of colored cubes.
 
-Every type of `build` has properties like
-    noise they generate, noise they can stand
-    need for X people
-    Entertainment level    
-    Maintainance costs
-    Different size
-    Combination of these determains price.
+Every type of `build` has properties like:
+    ☐ noise they generate, noise they can stand
+    ☐ need for X people
+    ☐ Entertainment level    
+    ☐ Maintainance costs
+    ☐ Different size
+    ☐ Combination of these determains price.
     
 Clock that runs daycycle (maybe in different speeds)
     
