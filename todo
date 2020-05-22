@@ -35,7 +35,8 @@ Every type of `build` has properties like
     
 Clock that runs daycycle (maybe in different speeds)
     
-
+Other things:
+     ☐ automatic deployment to test env.
 
 ------------------
 Links and Ideas
