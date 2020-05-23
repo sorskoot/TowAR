@@ -1,10 +1,10 @@
 # MagicaVoxel @ Ephtracy
 
 # group
-g Towar-4
+g towar-4
 
 # material
-mtllib Towar-4.mtl
+mtllib towar-4.mtl
 usemtl palette
 
 # normals
