@@ -6,19 +6,43 @@ View Modes:
     - Tower up to a specific floor
 
 Build: 
-    ☐ Lobby         @V1
+    ✔ Lobby         @V1 @done(20-05-25 21:42)
     ✔ Residential   @V1 @done(20-05-21 21:49)
     ✔ Commercial    @V1 @done(20-05-22 00:05)
-    ☐ Hotel         @V2
-    ☐ Restaurant    @V2
+    ☐ Hotel - single Room @V2
+    ☐ Hotel - double Room @V3
+    ☐ Fastfood Restaurant @V1
     ✔ Office        @V1 @done(20-05-23 21:37)
-
     ✔ Elevator      @V1 @done(20-05-21 21:49)
     ☐ Escalator     @V2
-    ☐ Stairs        @V2
+    ✔ Stairs        @V1 @done(20-05-25 21:42)
+    ☐ Security      @V2 
+        ~ after this Bomb threads will happen
 
     ☐ Entrance at bottom floor @V1 
     ☐ Outer walls @V1
+
+Gameplay elements to work out:
+    ☐ Ground level
+        ~ you need a ground level to be able to build underground
+    ☐ stairs on the outside
+    ☐ Your starting money 
+        ~ 2.000.000 in the origininal
+    ☐ Population
+    ☐ Stairs
+    ☐ Star system
+        ~ 1 to 5 starts
+        ~ certain things unlock elements to go to the next phase
+        
+    ☐ Sentiment
+        ~ do people like working or living somewhere
+        ~ red, orange or green
+
+    Time:
+        ☐ People don't work at night or on the weekends
+        ☐ People might go to the bar or fastfood during outside office hours
+        ☐ Every type has certain opening and closing times
+
     
 
 - Start with basic floor plan(lobby) 7x7, elevator in the center
@@ -36,7 +60,10 @@ Every type of `build` has properties like:
 Clock that runs daycycle (maybe in different speeds)
     
 Other things:
-     ☐ automatic deployment to test env.
+     ✔ automatic deployment to test env. @done(20-05-25 22:53)
+     ☐ Add SAO
+        ~ https://github.com/wizgrav/aframe-effects/tree/4c2812e012f41aa8f350a1e61aeceb1fbcbf141f
+        ~ https://threejs.org/examples/?q=ao#webgl_postprocessing_sao
 
 ------------------
 Links and Ideas
@@ -44,3 +71,6 @@ Links and Ideas
 https://coolors.co/app
 
 Similar game is available => Skytropolis
+
+interesting:
+    ~ https://gamefaqs.gamespot.com/pc/565191-simtower/faqs/7772

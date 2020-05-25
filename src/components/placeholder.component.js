@@ -12,9 +12,10 @@ export default AFRAME.registerComponent('placeholder', {
                 this.occupied = false;                
                 entity.setAttribute("mixin", "placeholder");
             } else {
-                entity.setAttribute("mixin", "commercial");
+                entity.setAttribute("mixin", "lobby");
                 this.occupied = true;
             }
+            this.el.parentElement.emit('placeholder-change', {pos:this.el.object3D.position});
             this.el.appendChild(entity);
         });
     },

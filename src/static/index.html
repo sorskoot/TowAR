@@ -23,13 +23,36 @@
             <a-mixin id="commercial" obj-model="obj: models/towar-4.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
             <a-mixin id="elevator" obj-model="obj: models/towar-2.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
             <a-mixin id="addfloor" obj-model="obj: models/towar-3.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
-        </a-assets>
+            <a-mixin id="office" obj-model="obj: models/towar-5.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
+            <a-mixin id="lobby" obj-model="obj: models/towar-6.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
+            <a-mixin id="stairs" obj-model="obj: models/towar-7.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
 
-        <a-entity tower scale=".3 .3 .3" rotation="0 180 0" position="0 1 -1">
-            <a-entity position="0 .5 0" add-floor></a-entity>
+            <a-mixin id="wall-straight-ground" obj-model="obj: models/towar-8.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-corner-ground" obj-model="obj: models/towar-9.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight" obj-model="obj: models/towar-10.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight2-ground" obj-model="obj: models/towar-11.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight3-ground" obj-model="obj: models/towar-12.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight4-ground" obj-model="obj: models/towar-13.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-corner" obj-model="obj: models/towar-14.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight2" obj-model="obj: models/towar-15.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight3" obj-model="obj: models/towar-16.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+            <a-mixin id="wall-straight4" obj-model="obj: models/towar-17.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>  
+        </a-assets>
+<!-- 
+        <a-entity mixin="wall-straight-ground" position="-5 0 -4"></a-entity>
+        <a-entity mixin="wall-straight" position="-5 .5 -4"></a-entity>
+        <a-entity mixin="wall-corner-ground" position="-5 0 -5"></a-entity>
+        <a-entity mixin="wall-corner" position="-5 .5 -5"></a-entity>
+        <a-entity mixin="wall-straight2-ground" position="-5 0 -3"></a-entity>
+        <a-entity mixin="wall-straight2" position="-5 .5 -3"></a-entity>
+        <a-entity mixin="wall-straight3-ground" position="-5 0 -2"></a-entity>
+        <a-entity mixin="wall-straight3" position="-5 0.5 -2"></a-entity>
+        <a-entity mixin="wall-straight4-ground" position="-5 0 -1"></a-entity>
+        <a-entity mixin="wall-straight4" position="-5 0.5 -1"></a-entity> -->
+        
+        <a-entity tower scale=".3 .3 .3" rotation="0 180 0" position="0 1 -1">            
             <a-entity floor="level:0"></a-entity>
         </a-entity>
-
 
         <a-entity wasd-controls camera look-controls="pointerLockEnabled:true;touchEnabled:true" position="0 1.7 0">
             <a-entity cursor="fuse: false;" material="color: black; shader: flat" position="0 0 -.5"
@@ -37,8 +60,9 @@
         </a-entity>
 
         <a-entity menu>
-            <a-box color="blue" menu-item position=" 0 -.5 -.25" scale=".1 .01 .1"></a-box>
-            <a-box color="green" menu-item position="0 -.5 -.15" scale=".1 .01 .1"></a-box>
+            <a-box color="rgb(179, 92, 55)" menu-item="name:residential" position=" 0 -.5 -.15" scale=".1 .01 .05"></a-box>
+            <a-box color="rgb(30,136,168)" menu-item="name:commercial" position="0 -.5 -.10" scale=".1 .01 .05"></a-box>
+            <a-box color="rgb(36,147,110)" menu-item="name:office" position="0 -.5 -.05" scale=".1 .01 .05"></a-box>
         </a-entity>
     </a-scene>
 </body>

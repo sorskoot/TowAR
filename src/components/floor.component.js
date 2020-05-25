@@ -1,25 +1,26 @@
 AFRAME.registerComponent('floor', {
     schema: {
-        width: { default: 7 },
-        depth: { default: 7 },
+        width: { default: 13 },
+        depth: { default: 13 },
         level: { default: 0 }
     },
     init: function () {
-        this.createFloor();
+        this.createEmptyFloor();
+        this.floor = [[]];
+       
+        this.updateWalls = this.updateWalls.bind(this);
+        this.el.addEventListener('placeholder-change', this.updateWalls);
     },
     update: function (oldData) { },
 
-    createFloor() {
+    createEmptyFloor() {
         for (let x = 0; x < this.data.width; x++) {
             for (let z = 0; z < this.data.depth; z++) {
                 const container = document.createElement("a-entity");
-                const placeholder = document.createElement("a-entity");
-                if(x==3 && z == 3){
-                    placeholder.setAttribute("mixin", "elevator");
-                }else{
-                    placeholder.setAttribute("mixin", "placeholder");
-                    container.setAttribute("placeholder", "");
-                }
+                const placeholder = document.createElement("a-entity");            
+                placeholder.setAttribute("mixin", "placeholder");
+                container.setAttribute("placeholder", "");
+
                 container.appendChild(placeholder);
 
                 const xpos = (this.el.object3D.position.x -
@@ -35,5 +36,9 @@ AFRAME.registerComponent('floor', {
                 this.el.appendChild(container);
             }
         }
+    },
+    updateWalls(e){
+        console.log('updating walls'+e.detail);
     }
+
 });
