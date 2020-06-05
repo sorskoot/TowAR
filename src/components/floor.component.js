@@ -1,176 +1,110 @@
 import { Room } from "../classes/room";
+import { Wall } from "../classes/wall";
+import { ROOM_TYPE } from "../classes/roomtype";
 
-AFRAME.registerComponent('floor', {
+const FLOOR_WIDTH = 99, FLOOR_DEPTH = 99;
+
+export default AFRAME.registerComponent('floor', {
     schema: {
-        width: { default: 13 },
-        depth: { default: 13 },
         level: { default: 0 }
     },
+
     init: function () {
+        this.floor = [...Array(FLOOR_WIDTH)].map(() => [...Array(FLOOR_DEPTH)])
         this.createEmptyFloor();
-        this.floor = [[]];
 
         this.onPlaceholderChange = this.onPlaceholderChange.bind(this);
         this.el.addEventListener('placeholder-change', this.onPlaceholderChange);
+
     },
 
     update: function (oldData) { },
 
     createEmptyFloor() {
-        this.startRoom = new Room();
-        this.addRoom({ x: 0, z: 0 });
-        this.walls = [];
-        this.checkedRoom = [];
-        this.updateWalls(this.startRoom, { x: 0, z: 0 })
+        this.addRoom(ROOM_TYPE.LOBBY, { x: 0, z: 0 });
+
+        this.updateWalls();
+
+        this.createRoomElements();
     },
 
-    createWall() {
-        const container = document.createElement("a-entity");
-        const wall = document.createElement("a-entity");
 
-        if (this.data.level === 0) {
-            wall.setAttribute("mixin", "wall-straight-ground");
-        } else {
-            wall.setAttribute("mixin", "wall-straight");
-        }
-        container.setAttribute("placeholder", "");
-        container.classList.add("wall");
-        container.appendChild(wall);
-        return container;
-    },
-
-    updateWalls(room, pos) {
-        // check room is already checked.
-        if (!!~this.checkedRoom.indexOf(room.id)) {
-            return;
-        }
-        this.checkedRoom.push(room.id);
-        if (!room.north) {
-            
-            const wall = this.createWall();
-            const wallPos = {
-                x: pos.x,
-                y: this.data.level * .5,
-                z: pos.z + 1
-            };
-            wall.setAttribute("position", wallPos)
-            wall.setAttribute("rotation", { y: 270 });
-            this.el.appendChild(wall);            
-            this.walls.push({ pos: wallPos, dir: { north: room } });
-        } else {
-            this.updateWalls(room.north,  {
-                x: pos.x,
-                z: pos.z + 1
-            });
-        }
-
-        if (!room.south) {
-            const wall = this.createWall();
-            const wallPos = {
-                x: pos.x,
-                y: this.data.level * .5,
-                z: pos.z - 1
-            };
-            wall.setAttribute("position", wallPos)
-            wall.setAttribute("rotation", { y: 90 });
-            this.el.appendChild(wall);
-            this.walls.push({ pos: wallPos, dir: { south: room } });
-        } else {
-            this.updateWalls(room.south, {
-                x: pos.x,
-                z: pos.z - 1
-            });
-        }
-
-        if (!room.east) {
-            const wall = this.createWall();
-            const wallPos = {
-                x: pos.x - 1,
-                y: this.data.level * .5,
-                z: pos.z
-            };
-            wall.setAttribute("position", wallPos)
-            wall.setAttribute("rotation", { y: 180 });
-            this.el.appendChild(wall);
-            this.walls.push({ pos: wallPos, dir: { east: room } });
-        } else {
-            this.updateWalls(room.east, {
-                x: pos.x - 1,
-                z: pos.z
-            });
-        }
-
-        if (!room.west) {
-            const wall = this.createWall();
-            const wallPos = {
-                x: pos.x + 1,
-                y: this.data.level * .5,
-                z: pos.z
-            };
-            wall.setAttribute("position", wallPos)
-            wall.setAttribute("rotation", { y: 0 });
-            this.el.appendChild(wall);
-            this.walls.push(
-                {
-                    pos: wallPos,
-                    dir: { west: room }
-                });
-            } else {
-                this.updateWalls(room.west, {
-                    x: pos.x + 1,
-                    z: pos.z
-                });
+    updateWalls() {
+        // remove all walls first maybe?
+        for (let x = 0; x < FLOOR_WIDTH; x++) {
+            for (let z = 0; z < FLOOR_DEPTH; z++) {
+                if (this.floor[x][z] && this.floor[x][z].roomtype === ROOM_TYPE.WALL){
+                    this.floor[x][z]=undefined;
+                }
             }
-        //add room to the list of checked rooms
-        
+        }
+        for (let x = 0; x < FLOOR_WIDTH; x++) {
+            for (let z = 0; z < FLOOR_DEPTH; z++) {
+
+                if (this.floor[x][z]) continue;
+
+                let walltype = 0;
+                let pp = 0;
+                for (let cx = -1; cx <= 1; cx++) {
+                    for (let cz = -1; cz <= 1; cz++) {
+
+                        if (cx === 0 && cz === 0) continue;
+
+                        if (this.floor[x + cx] && this.floor[x + cx][z + cz]
+                            && this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.WALL) {
+                            walltype += 1 << pp;
+                        }
+                        pp++;
+                    }
+                }
+                if (walltype !== 0) {
+                    const wall = new Wall(walltype, this.data.level === 0)
+                    this.floor[x][z] = wall;
+                    //add wall to floor                
+                }
+            }
+        }
     },
 
     onPlaceholderChange({ detail }) {
-        let wall = this.walls.find(d => d.pos.x === detail.x && d.pos.z === detail.z);
-        // What do we need to do.
-        if (!wall) return;
-        this.addRoom(wall.pos);
-        const newRoom = new Room();
-        if(wall.dir.south){
-            const southRoom = wall.dir.south;
-            newRoom.north = southRoom;
-            southRoom.south = newRoom
-        }
-        if(wall.dir.north){
-            const northRoom = wall.dir.north;
-            newRoom.south = northRoom;
-            northRoom.north = newRoom
-        }
-        if(wall.dir.east){
-            const eastRoom = wall.dir.east;
-            newRoom.west = eastRoom;
-            eastRoom.east = newRoom
-        }
-        if(wall.dir.west){
-            const westRoom = wall.dir.west;
-            newRoom.east = westRoom;
-            westRoom.west = newRoom
-        }
-        this.el.querySelectorAll(".wall").remove();  
-        this.checkedRoom = [];
-        this.walls = [];
-        this.updateWalls(this.startRoom, { x: 0, z: 0 })   
+        this.el.querySelectorAll("a-entity").remove();
+        this.addRoom(ROOM_TYPE.LOBBY, { x: detail.x, z: detail.z});        
+        this.updateWalls();
+        this.createRoomElements();
     },
-    
-    addRoom(pos) {
-        const container = document.createElement("a-entity");
-        const lobby = document.createElement("a-entity");
-        lobby.setAttribute("mixin", "lobby");
-        container.appendChild(lobby);
-        container.setAttribute("position", {
-            x: pos.x,
-            y: this.data.level * .5,
-            z: pos.z
-        });
-        this.el.appendChild(container);
+
+    createRoomElements() {
+        for (let x = 0; x < FLOOR_WIDTH; x++) {
+            for (let z = 0; z < FLOOR_DEPTH; z++) {
+                const room = this.floor[x][z];
+                if (room) {
+                    const container = document.createElement("a-entity");
+                    const roomEntity = document.createElement("a-entity");
+
+                    roomEntity.setAttribute("mixin", room.getMixin());
+                    roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
+                    if(room.roomtype === ROOM_TYPE.WALL && this.data.level === 0){
+                        container.setAttribute("placeholder", "");
+                    }
+                    container.appendChild(roomEntity);
+                    container.setAttribute("position", {
+                        x: x - ~~(FLOOR_WIDTH / 2),
+                        y: this.data.level * .5,
+                        z: z - ~~(FLOOR_DEPTH / 2)
+                    });
+                    this.el.appendChild(container);
+                }
+            }
+        }
+
+    },
+
+    addRoom(roomtype, pos) {
+        const room = new Room(roomtype);
+        this.floor[pos.x + ~~(FLOOR_WIDTH / 2)][pos.z + ~~(FLOOR_DEPTH / 2)] = room;
     }
 });
 
-NodeList.prototype.remove = function(){
+NodeList.prototype.remove = function () {
     this.forEach(el => el.remove());
 }

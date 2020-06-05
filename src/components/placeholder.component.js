@@ -18,7 +18,7 @@ export default AFRAME.registerComponent('placeholder', {
             this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
           //  this.el.appendChild(entity);
         });
-    },
+    },    
     update: function (oldData) { },
     tick: function (time, timeDelta) { },
     tock: function (time, timeDelta, camera) { },

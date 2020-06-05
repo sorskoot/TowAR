@@ -1,4 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const fs = require('fs');
 
 module.exports = {
     entry: './src/index.js',
@@ -6,6 +7,20 @@ module.exports = {
         path: __dirname + '/dist',
         filename: '[name].js'
     },
+    devServer: {
+        https: true,
+        port:443,
+        // allowedHosts: [
+        //     '.c0dr.nl',
+        //     'c0dr.nl',
+        // ],
+        disableHostCheck: true,
+        host: 'c0dr.nl',
+        contentBase: __dirname+'/dist',
+        key: fs.readFileSync('c0dr_nl.key'),
+        cert: fs.readFileSync('c0dr_nl.crt'),
+        ca: fs.readFileSync('c0dr_nl.pem'),
+      },
     plugins: [
         new CopyPlugin([{
             from: './src/static',
