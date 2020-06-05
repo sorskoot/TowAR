@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "**/*.crt": true,
+        "**/*.key": true,
+        "**/*.pem": true
+    }
+}
