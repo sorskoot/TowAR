@@ -23,6 +23,7 @@ Build:
     ☐ Outer walls @V1
 
 Gameplay elements to work out:
+    ☐ Improve redraw. instead of removing everything, only change what needs to be changed.
     ☐ Ground level
         ~ you need a ground level to be able to build underground
     ☐ stairs on the outside

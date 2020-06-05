@@ -10,13 +10,20 @@ module.exports = {
         new CopyPlugin([{
             from: './src/static',
             to: ''
-        }, ]),
+        },]),
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ["@babel/plugin-syntax-numeric-separator"]
+                    }
+                }
             },
             {
                 test: /\.(glsl|vs|fs|vert|frag)$/,
