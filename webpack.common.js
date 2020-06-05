@@ -1,5 +1,4 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const fs = require('fs');
 
 module.exports = {
     entry: './src/index.js',
