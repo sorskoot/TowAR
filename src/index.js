@@ -1,5 +1,6 @@
-import aframe from 'aframe';
-import placeholder from './components/placeholder.component';
-import floor from './components/floor.component';
-import addFloor from './components/add-floor.component';
-import menu from './components/menu.component';
+import './lib/aframe-master';
+import './components/placeholder.component';
+import './components/floor.component';
+import './components/add-floor.component';
+import './components/menu.component';
+import './components/dom-click.component';

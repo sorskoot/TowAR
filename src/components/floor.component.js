@@ -11,11 +11,16 @@ export default AFRAME.registerComponent('floor', {
 
     init: function () {
         this.floor = [...Array(FLOOR_WIDTH)].map(() => [...Array(FLOOR_DEPTH)])
+
+        this.currentRoomtype = ROOM_TYPE.LOBBY;
+
         this.createEmptyFloor();
 
         this.onPlaceholderChange = this.onPlaceholderChange.bind(this);
         this.el.addEventListener('placeholder-change', this.onPlaceholderChange);
 
+        this.onDomClick = this.onDomClick.bind(this);
+        this.el.sceneEl?.addEventListener('dom-click', this.onDomClick);
     },
 
     update: function (oldData) { },
@@ -33,8 +38,8 @@ export default AFRAME.registerComponent('floor', {
         // remove all walls first maybe?
         for (let x = 0; x < FLOOR_WIDTH; x++) {
             for (let z = 0; z < FLOOR_DEPTH; z++) {
-                if (this.floor[x][z] && this.floor[x][z].roomtype === ROOM_TYPE.WALL){
-                    this.floor[x][z]=undefined;
+                if (this.floor[x][z] && this.floor[x][z].roomtype === ROOM_TYPE.WALL) {
+                    this.floor[x][z] = undefined;
                 }
             }
         }
@@ -68,7 +73,7 @@ export default AFRAME.registerComponent('floor', {
 
     onPlaceholderChange({ detail }) {
         this.el.querySelectorAll("a-entity").remove();
-        this.addRoom(ROOM_TYPE.LOBBY, { x: detail.x, z: detail.z});        
+        this.addRoom(this.currentRoomtype, { x: detail.x, z: detail.z });
         this.updateWalls();
         this.createRoomElements();
     },
@@ -83,7 +88,7 @@ export default AFRAME.registerComponent('floor', {
 
                     roomEntity.setAttribute("mixin", room.getMixin());
                     roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
-                    if(room.roomtype === ROOM_TYPE.WALL && this.data.level === 0){
+                    if (room.roomtype === ROOM_TYPE.WALL && this.data.level === 0) {
                         container.setAttribute("placeholder", "");
                     }
                     container.appendChild(roomEntity);
@@ -102,6 +107,11 @@ export default AFRAME.registerComponent('floor', {
     addRoom(roomtype, pos) {
         const room = new Room(roomtype);
         this.floor[pos.x + ~~(FLOOR_WIDTH / 2)][pos.z + ~~(FLOOR_DEPTH / 2)] = room;
+    },
+    onDomClick(e) {
+        if (e.detail.target.classList.contains('select-room')) {
+            this.currentRoomtype = e.detail.target.value;
+        }
     }
 });
 

@@ -7,5 +7,6 @@ This game build with support of our great Twitch Community. You should check it 
 TWITCH SUBS:
     [Donnerknalli](https://www.twitch.tv/donnerknalli)
     [Lilahamstern](https://www.twitch.tv/Lilahamstern)
+    [SoullessShoe](https://www.twitch.tv/SoullessShoe)
 
 All Subs, Bits and such that happen during the development will be added to the credits as a gratidute for supporting.

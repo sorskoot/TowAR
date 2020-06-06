@@ -2,6 +2,9 @@ export default AFRAME.registerComponent('placeholder', {
     schema: {},
     init: function () {
         this.occupied = false;
+        this.el.addEventListener('dom-click', (evt) => {
+            this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
+        });
         this.el.addEventListener('click', (evt) => {
             //lastIndex = (lastIndex + 1) % COLORS.length;
             //this.setAttribute('material', 'color', COLORS[lastIndex]);
