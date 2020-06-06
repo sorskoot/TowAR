@@ -1,4 +1,4 @@
-import './lib/aframe-master';
+//import './lib/aframe-master';
 import './components/placeholder.component';
 import './components/floor.component';
 import './components/add-floor.component';

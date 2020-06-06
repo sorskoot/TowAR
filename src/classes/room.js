@@ -3,7 +3,7 @@ export class Room {
         this.roomtype = roomtype;
         this.id = +new Date();
     }
-
+    getType() {return ""}
     getMixin() {
         return this.roomtype;
     }

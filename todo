@@ -21,6 +21,7 @@ Build:
 
     ☐ Entrance at bottom floor @V1 
     ☐ Outer walls @V1
+        ☐ create all 256 variations
 
 Gameplay elements to work out:
     ☐ Improve redraw. instead of removing everything, only change what needs to be changed.
@@ -46,7 +47,7 @@ Gameplay elements to work out:
 
     
 
-- Start with basic floor plan(lobby) 7x7, elevator in the center
+    ☐ Clock that runs daycycle (maybe in different speeds)
 
 V1 -> Tower of colored cubes.
 
@@ -58,7 +59,13 @@ Every type of `build` has properties like:
     ☐ Different size
     ☐ Combination of these determains price.
     
-Clock that runs daycycle (maybe in different speeds)
+Overall Gameplay:
+    Brower specific:
+    AR specific:
+        ☐ Detect when getting into AR mode
+        ☐ User hit-test to place tower when entering AR
+    VR specific:  
+        ☐ Rotate the tower
     
 Other things:
      ✔ automatic deployment to test env. @done(20-05-25 22:53)

@@ -6,20 +6,9 @@ export default AFRAME.registerComponent('placeholder', {
             this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
         });
         this.el.addEventListener('click', (evt) => {
-            //lastIndex = (lastIndex + 1) % COLORS.length;
-            //this.setAttribute('material', 'color', COLORS[lastIndex]);
-            //console.log('I was clicked at: ', evt.detail.intersection.point);
-            // this.el.innerHTML = '';
-            // const entity = document.createElement("a-entity");
-            // if (this.occupied) {
-            //     this.occupied = false;                
-            //     entity.setAttribute("mixin", "placeholder");
-            // } else {
-            //     entity.setAttribute("mixin", "lobby");
-            //     this.occupied = true;
-            // }
-            this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
-          //  this.el.appendChild(entity);
+            console.log(this.el.getAttribute("data-type"));
+           // this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
+
         });
     },    
     update: function (oldData) { },

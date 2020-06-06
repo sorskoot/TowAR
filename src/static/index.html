@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>TowAR</title>
+    <script src="aframe-master.js"></script>
     <script src="main.js"></script>
     <style>
         #overlay {
@@ -69,6 +70,10 @@
                 mixin="voxel-scale"></a-mixin>
             <a-mixin id="wall-corner" obj-model="obj: models/towar-17.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
+            <a-mixin id="wall-corner-opposite-ground" obj-model="obj: models/towar-37.obj; mtl: #voxel-mtl" mixin="voxel-scale">
+            </a-mixin>
+            <a-mixin id="wall-corner-opposite" obj-model="obj: models/towar-38.obj; mtl: #voxel-mtl" mixin="voxel-scale">
+            </a-mixin>
             <a-mixin id="wall-corner2" obj-model="obj: models/towar-18.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
             <a-mixin id="wall-corner3" obj-model="obj: models/towar-19.obj; mtl: #voxel-mtl" mixin="voxel-scale">
@@ -81,9 +86,9 @@
             </a-mixin>
             <a-mixin id="wall-straight4" obj-model="obj: models/towar-23.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
-            <a-mixin id="wall-opposite-ground" obj-model="obj: models/towar-18.obj; mtl: #voxel-mtl"
+            <a-mixin id="wall-opposite-ground" obj-model="obj: models/towar-34.obj; mtl: #voxel-mtl"
                 mixin="voxel-scale"></a-mixin>
-            <a-mixin id="wall-opposite" obj-model="obj: models/towar-19.obj; mtl: #voxel-mtl" mixin="voxel-scale">
+            <a-mixin id="wall-opposite" obj-model="obj: models/towar-35.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
 
             <a-mixin id="wall-straight-corner-ground" obj-model="obj: models/towar-24.obj; mtl: #voxel-mtl"
@@ -105,6 +110,9 @@
             <a-mixin id="wall-straight2-corner-mirror-ground" obj-model="obj: models/towar-32.obj; mtl: #voxel-mtl"
                 mixin="voxel-scale"></a-mixin>
             <a-mixin id="wall-straight2-corner-mirror" obj-model="obj: models/towar-33.obj; mtl: #voxel-mtl"
+                mixin="voxel-scale"></a-mixin>
+
+            <a-mixin id="floor" obj-model="obj: models/towar-36.obj; mtl: #voxel-mtl"
                 mixin="voxel-scale"></a-mixin>
         </a-assets>
 
@@ -128,11 +136,12 @@
         <a-entity mixin="wall-straight-corner2-ground" position="-5 0 -3"></a-entity>
         <a-entity mixin="wall-straight-corner2" position="-5 .5 -3"></a-entity>
         <a-entity mixin="wall-straight-corner-mirror-ground" position="-5 0 -2"></a-entity>
-        <a-entity mixin="wall-straight-corner-mirror" position="-5 0.5 -2"></a-entity>
-        <a-entity mixin="wall-straight-corner-ground" position="-5 0 -1"></a-entity>
-        <a-entity mixin="wall-straight-corner" position="-5 0.5 -1"></a-entity> -->
+        <a-entity mixin="wall-straight-corner-mirror" position="-5 0.5 -2"></a-entity>-->
+        <a-entity mixin="wall-corner-opposite-ground" position="-5 0 -1"></a-entity>
+        <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity> 
+        
 
-        <a-entity tower scale=".3 .3 .3" rotation="0 180 0" position="0 0 -1">
+        <a-entity tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2">
             <a-entity floor="level:0"></a-entity>
         </a-entity>
 
