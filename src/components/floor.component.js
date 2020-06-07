@@ -29,13 +29,13 @@ export default AFRAME.registerComponent('floor', {
         //this.addRoom(ROOM_TYPE.LOBBY, { x: 0, z: 0 });
         
 /*10000000*/ //this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  1 });
-/*00010000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  1 });
+/*00010000*/ //this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  1 });
 /*00000100*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  1 });
         
 /*01000000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  0 });
 /*00000010*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  0 });
 
-/*00100000*/ //this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  -1 });        
+/*00100000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  -1 });        
 /*00001000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  -1 });
 /*00000001*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  -1 });
 
