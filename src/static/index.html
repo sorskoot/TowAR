@@ -13,12 +13,13 @@
     <style>
         #overlay {
             /*   display: none;*/
-            margin:25px;
+            margin: 25px;
             z-index: 1001;
             position: absolute;
         }
+
         #overlay.legacy-ar-mode,
-            :xr-overlay {          
+        :xr-overlay {
             display: initial;
         }
     </style>
@@ -27,11 +28,16 @@
 
 <body>
     <div id="overlay">
-        <button class="select-room" id="add-lobby" value="lobby">lobby</button>
-        <button class="select-room" id="add-stairs" value="stairs">stairs</button>
-        <button class="select-room" id="add-residential"value="residential">residential</button>
-        <button class="select-room" id="add-office" value="office">office</button>
-        <button class="select-room" id="add-commercial" value="commercial">commercial</button>
+        <div>
+            <button class="select-room" id="add-lobby" value="lobby">lobby</button>
+            <button class="select-room" id="add-stairs" value="stairs">stairs</button>
+            <button class="select-room" id="add-residential" value="residential">residential</button>
+            <button class="select-room" id="add-office" value="office">office</button>
+            <button class="select-room" id="add-commercial" value="commercial">commercial</button>
+        </div>
+        <div>
+            <button id="add-floor" value="add-floor">Add Floor</button>
+        </div>
     </div>
 
     <a-scene webxr="optionalFeatures: dom-overlay; overlayElement: #overlay">
@@ -70,9 +76,11 @@
                 mixin="voxel-scale"></a-mixin>
             <a-mixin id="wall-corner" obj-model="obj: models/towar-17.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
-            <a-mixin id="wall-corner-opposite-ground" obj-model="obj: models/towar-37.obj; mtl: #voxel-mtl" mixin="voxel-scale">
+            <a-mixin id="wall-corner-opposite-ground" obj-model="obj: models/towar-37.obj; mtl: #voxel-mtl"
+                mixin="voxel-scale">
             </a-mixin>
-            <a-mixin id="wall-corner-opposite" obj-model="obj: models/towar-38.obj; mtl: #voxel-mtl" mixin="voxel-scale">
+            <a-mixin id="wall-corner-opposite" obj-model="obj: models/towar-38.obj; mtl: #voxel-mtl"
+                mixin="voxel-scale">
             </a-mixin>
             <a-mixin id="wall-corner2" obj-model="obj: models/towar-18.obj; mtl: #voxel-mtl" mixin="voxel-scale">
             </a-mixin>
@@ -112,17 +120,19 @@
             <a-mixin id="wall-straight2-corner-mirror" obj-model="obj: models/towar-33.obj; mtl: #voxel-mtl"
                 mixin="voxel-scale"></a-mixin>
 
-            <a-mixin id="floor" obj-model="obj: models/towar-36.obj; mtl: #voxel-mtl"
-                mixin="voxel-scale"></a-mixin>
+            <a-mixin id="floor" obj-model="obj: models/towar-36.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
         </a-assets>
 
-        <a-entity dom-click="element:#add-stairs;target:a-scene" ></a-entity>
-        <a-entity dom-click="element:#add-lobby;target:a-scene" ></a-entity>
-        <a-entity dom-click="element:#add-residential;target:a-scene" ></a-entity>
-        <a-entity dom-click="element:#add-office;target:a-scene" ></a-entity>
-        <a-entity dom-click="element:#add-commercial;target:a-scene" ></a-entity>
+        <a-entity dom-click="element:#add-stairs;target:a-scene"></a-entity>
+        <a-entity dom-click="element:#add-lobby;target:a-scene"></a-entity>
+        <a-entity dom-click="element:#add-residential;target:a-scene"></a-entity>
+        <a-entity dom-click="element:#add-office;target:a-scene"></a-entity>
+        <a-entity dom-click="element:#add-commercial;target:a-scene"></a-entity>
 
-        
+        <a-entity dom-click="element:#add-floor;target:#add-floor-component"></a-entity>
+        <a-entity id="add-floor-component" add-floor></a-entity>
+
+
         <!-- <a-entity mixin="wall-straight-ground" position="-5 0 -4"></a-entity>
         <a-entity mixin="wall-straight" position="-5 .5 -4"></a-entity>
         <a-entity mixin="wall-corner-ground" position="-5 0 -5"></a-entity>
@@ -137,18 +147,20 @@
         <a-entity mixin="wall-straight-corner2" position="-5 .5 -3"></a-entity>
         <a-entity mixin="wall-straight-corner-mirror-ground" position="-5 0 -2"></a-entity>
         <a-entity mixin="wall-straight-corner-mirror" position="-5 0.5 -2"></a-entity>-->
-        <a-entity mixin="wall-corner-opposite-ground" position="-5 0 -1"></a-entity>
-        <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity> 
-        
+        <!-- <a-entity mixin="wall-corner-opposite-ground" position="-5 0 -1"></a-entity>
+        <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity>  -->
+
 
         <a-entity tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2">
-            <a-entity floor="level:0"></a-entity>
+            <a-entity floor="level:0" data-level="0"></a-entity>
         </a-entity>
 
-        <a-entity wasd-controls camera look-controls="pointerLockEnabled:true;touchEnabled:true" position="0 1.7 0">
-            <a-entity cursor="fuse: false;" 
-                material="color: black; shader: flat" position="0 0 -.5"
-                geometry="primitive: ring;radiusInner: 0.007; radiusOuter: 0.009"></a-entity>
+        <a-entity wasd-controls="acceleration:35" camera look-controls="pointerLockEnabled:false;touchEnabled:true"
+            position="0 1.7 0">
+            <a-entity cursor="rayOrigin: mouse"></a-entity>
+<!--             
+            <a-entity cursor="fuse: false;" material="color: black; shader: flat" position="0 0 -.5"
+                geometry="primitive: ring;radiusInner: 0.007; radiusOuter: 0.009"></a-entity> -->
         </a-entity>
 
         <!-- <a-entity menu>

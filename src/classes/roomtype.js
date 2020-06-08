@@ -4,5 +4,7 @@ export const ROOM_TYPE = {
     STAIRS: "stairs",
     RESIDENTIAL: "residential",
     OFFICE:"office",
-    COMMERCIAL:"commercial"
+    COMMERCIAL:"commercial",
+    FLOOR:"floor"
 }
+

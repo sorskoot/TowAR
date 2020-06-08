@@ -26,18 +26,33 @@ export default AFRAME.registerComponent('floor', {
     update: function (oldData) { },
 
     createEmptyFloor() {
-        //this.addRoom(ROOM_TYPE.LOBBY, { x: 0, z: 0 });
-        
-/*10000000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  1 });
-/*00010000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  1 });
-/*00000100*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  1 });
-        
-/*01000000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  0 });
-/*00000010*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  0 });
 
-/*00100000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  -1 });        
-/*00001000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  -1 });
-/*00000001*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  -1 });
+        // /*10000000*/ //this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  1 });
+        // /*00010000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  1 });
+        // /*00000100*/ //this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  1 });
+
+        // /*01000000*/ //this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  0 });
+        // /*00000010*/ //this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  0 });
+
+        // /*00100000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  1, z:  -1 });        
+        // /*00001000*/ this.addRoom(ROOM_TYPE.LOBBY, { x:  0, z:  -1 });
+        // /*00000001*/ this.addRoom(ROOM_TYPE.LOBBY, { x: -1, z:  -1 });
+
+        if (this.data.level === 0) {
+            this.addRoom(ROOM_TYPE.LOBBY, { x: 0, z: 0 });
+        } else {
+            const levelbelowEl = document.querySelector(`[data-level='${this.data.level - 1}']`);
+            if (levelbelowEl) {
+                const floorbelow = levelbelowEl.components['floor'].floor;
+                for (let x = 0; x < FLOOR_WIDTH; x++) {
+                    for (let z = 0; z < FLOOR_DEPTH; z++) {
+                        if (floorbelow[x][z] && floorbelow[x][z].roomtype !== ROOM_TYPE.WALL) {
+                            this.addRoom(ROOM_TYPE.FLOOR, { x: x - ~~(FLOOR_WIDTH / 2), z: z - ~~(FLOOR_DEPTH / 2) });
+                        }
+                    }
+                }
+            }
+        }
 
         this.updateWalls();
 
@@ -96,7 +111,7 @@ export default AFRAME.registerComponent('floor', {
                 if (room) {
                     const container = document.createElement("a-entity");
                     const roomEntity = document.createElement("a-entity");
-                    
+
                     roomEntity.setAttribute("mixin", room.getMixin());
                     roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
                     if (room.roomtype === ROOM_TYPE.WALL && this.data.level === 0) {

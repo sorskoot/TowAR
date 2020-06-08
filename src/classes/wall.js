@@ -126,7 +126,7 @@ const walltypes = {
     0b01101101: { type: "straight2-corner", rot: 180 },    
     0b01101110: { type: "straight3", rot: 180 },
     0b01101111: { type: "straight3", rot: 180 },
-
+    
     0b01110000: { type: "straight2", rot: 90 },
     0b01110001: { type: "straight2-corner", rot: 90 },
     0b01110010: { type: "straight3", rot: 0 },
@@ -165,7 +165,7 @@ const walltypes = {
     0b10010001: { type: "straight-corner-mirror", rot: 90 },
     0b10010010: { type: "straight2", rot: 0 },
     0b10010011: { type: "straight2", rot: 0 },
-    0b10010100: { type: "straight", rot: 90 },
+    0b10010100: { type: "straight", rot: 90 },        
     0b10010101: { type: "straight2", rot: 0 },
     0b10010110: { type: "straight2", rot: 0 },
     0b10010111: { type: "straight2", rot: 0 },
@@ -177,7 +177,7 @@ const walltypes = {
     0b10011101: { type: "opposite", rot: 90 },
     0b10011110: { type: "straight3", rot: 270 },
     0b10011111: { type: "straight3", rot: 270 },
-
+    
     0b10100000: { type: "corner2", rot: 270 },
     0b10100001: { type: "corner3", rot: 270 },
     0b10100010: { type: "straight-corner2", rot: 0 },

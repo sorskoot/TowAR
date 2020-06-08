@@ -7,8 +7,7 @@ export default AFRAME.registerComponent('placeholder', {
         });
         this.el.addEventListener('click', (evt) => {
             console.log(this.el.getAttribute("data-type"));
-           // this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
-
+            this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
         });
     },    
     update: function (oldData) { },
