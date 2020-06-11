@@ -20,8 +20,8 @@ Build:
         ~ after this Bomb threads will happen
 
     ☐ Entrance at bottom floor @V1 
-    ☐ Outer walls @V1
-        ☐ create all 256 variations
+    ✔ Outer walls @V1 @done(20-06-11 22:52)
+        ✔ create all 256 variations @done(20-06-11 22:52)
 
 Gameplay elements to work out:
     ☐ Improve redraw. instead of removing everything, only change what needs to be changed.
@@ -50,6 +50,9 @@ Gameplay elements to work out:
     ☐ Clock that runs daycycle (maybe in different speeds)
 
 V1 -> Tower of colored cubes.
+
+GameEngine:
+    ☐ Add floor if there's a level about an added room
 
 Every type of `build` has properties like:
     ☐ noise they generate, noise they can stand

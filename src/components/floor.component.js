@@ -40,21 +40,10 @@ export default AFRAME.registerComponent('floor', {
 
         if (this.data.level === 0) {
             this.addRoom(ROOM_TYPE.LOBBY, { x: 0, z: 0 });
+            this.updateWalls();
         } else {
-            const levelbelowEl = document.querySelector(`[data-level='${this.data.level - 1}']`);
-            if (levelbelowEl) {
-                const floorbelow = levelbelowEl.components['floor'].floor;
-                for (let x = 0; x < FLOOR_WIDTH; x++) {
-                    for (let z = 0; z < FLOOR_DEPTH; z++) {
-                        if (floorbelow[x][z] && floorbelow[x][z].roomtype !== ROOM_TYPE.WALL) {
-                            this.addRoom(ROOM_TYPE.FLOOR, { x: x - ~~(FLOOR_WIDTH / 2), z: z - ~~(FLOOR_DEPTH / 2) });
-                        }
-                    }
-                }
-            }
+            this.addFloors();
         }
-
-        this.updateWalls();
 
         this.createRoomElements();
     },
@@ -64,25 +53,32 @@ export default AFRAME.registerComponent('floor', {
         // remove all walls first maybe?
         for (let x = 0; x < FLOOR_WIDTH; x++) {
             for (let z = 0; z < FLOOR_DEPTH; z++) {
-                if (this.floor[x][z] && this.floor[x][z].roomtype === ROOM_TYPE.WALL) {
+                if (this.floor[x][z] &&
+                    (this.floor[x][z].roomtype === ROOM_TYPE.WALL ||
+                        this.floor[x][z].roomtype === ROOM_TYPE.FLOOR)) {
                     this.floor[x][z] = undefined;
                 }
             }
         }
+
         for (let x = 0; x < FLOOR_WIDTH; x++) {
             for (let z = 0; z < FLOOR_DEPTH; z++) {
 
-                if (this.floor[x][z]) continue;
+                if (this.floor[x][z]) {
+
+                    continue;
+                }
 
                 let walltype = 0;
                 let pp = 0;
                 for (let cx = -1; cx <= 1; cx++) {
                     for (let cz = -1; cz <= 1; cz++) {
-
                         if (cx === 0 && cz === 0) continue;
-
-                        if (this.floor[x + cx] && this.floor[x + cx][z + cz]
-                            && this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.WALL) {
+                        if (this.floor[x + cx] &&
+                            this.floor[x + cx][z + cz]
+                            && this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.WALL
+                            //&& this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.FLOOR
+                        ) {
                             walltype += 1 << pp;
                         }
                         pp++;
@@ -91,7 +87,6 @@ export default AFRAME.registerComponent('floor', {
                 if (walltype !== 0) {
                     const wall = new Wall(walltype, this.data.level === 0)
                     this.floor[x][z] = wall;
-                    //add wall to floor                
                 }
             }
         }
@@ -101,6 +96,7 @@ export default AFRAME.registerComponent('floor', {
         this.el.querySelectorAll("a-entity").remove();
         this.addRoom(this.currentRoomtype, { x: detail.x, z: detail.z });
         this.updateWalls();
+        this.addFloors();
         this.createRoomElements();
     },
 
@@ -114,9 +110,18 @@ export default AFRAME.registerComponent('floor', {
 
                     roomEntity.setAttribute("mixin", room.getMixin());
                     roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
-                    if (room.roomtype === ROOM_TYPE.WALL && this.data.level === 0) {
+                    if ((room.roomtype === ROOM_TYPE.WALL && this.data.level === 0)
+                        ||
+                        ((room.roomtype === ROOM_TYPE.FLOOR ||
+                            room.hasFloor) && this.data.level !== 0)
+                    ) {
                         container.setAttribute("placeholder", "");
                         container.setAttribute("data-type", room.getType());
+                        if (room.hasFloor) {
+                            const floorEntity = document.createElement("a-entity");
+                            floorEntity.setAttribute('mixin', 'floor');
+                            container.appendChild(floorEntity);
+                        }
                     }
                     container.appendChild(roomEntity);
                     container.setAttribute("position", {
@@ -139,9 +144,38 @@ export default AFRAME.registerComponent('floor', {
         if (e.detail.target.classList.contains('select-room')) {
             this.currentRoomtype = e.detail.target.value;
         }
+    },
+
+    addFloors() {
+        const levelbelowEl = document.querySelector(`[data-level='${this.data.level - 1}']`);
+        if (levelbelowEl) {
+            const floorbelow = levelbelowEl.components['floor'].floor;
+            for (let x = 0; x < FLOOR_WIDTH; x++) {
+                for (let z = 0; z < FLOOR_DEPTH; z++) {
+
+                    // if (this.floor[x][z] &&
+                    //     this.floor[x][z].roomtype === ROOM_TYPE.WALL) {
+                    //     wall.hasFloor = true;
+                    // }
+
+                    if (floorbelow[x][z] &&
+                        (floorbelow[x][z].roomtype !== ROOM_TYPE.WALL &&
+                            floorbelow[x][z].roomtype !== ROOM_TYPE.FLOOR)) {
+                        if (!this.floor[x][z]) {
+                            this.addRoom(ROOM_TYPE.FLOOR, { x: x - ~~(FLOOR_WIDTH / 2), z: z - ~~(FLOOR_DEPTH / 2) });
+                        }else{
+                            if(this.floor[x][z].roomtype === ROOM_TYPE.WALL){
+                                this.floor[x][z].hasFloor = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 });
 
 NodeList.prototype.remove = function () {
     this.forEach(el => el.remove());
 }
+

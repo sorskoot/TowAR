@@ -291,6 +291,7 @@ export class Wall extends Room {
         super(ROOM_TYPE.WALL);
         this.walltype = walltype;
         this.groundfloor = groundfloor;
+        this.hasFloor = false;
         //choose wall mixin and rotation based on walltype
     }
     getType(){
