@@ -95,9 +95,18 @@ export default AFRAME.registerComponent('floor', {
     onPlaceholderChange({ detail }) {
         this.el.querySelectorAll("a-entity").remove();
         this.addRoom(this.currentRoomtype, { x: detail.x, z: detail.z });
+        
         this.updateWalls();
         this.addFloors();
         this.createRoomElements();
+
+        const levelAboveEl = document.querySelector(`[data-level='${this.data.level + 1}']`);
+        if (levelAboveEl) {
+            const floorAboveComponent = levelAboveEl.components['floor'];
+            levelAboveEl.querySelectorAll("a-entity").remove();
+            floorAboveComponent.addFloors();
+            floorAboveComponent.createRoomElements();
+        }
     },
 
     createRoomElements() {

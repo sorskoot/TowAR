@@ -43,16 +43,14 @@ Gameplay elements to work out:
     Time:
         ☐ People don't work at night or on the weekends
         ☐ People might go to the bar or fastfood during outside office hours
-        ☐ Every type has certain opening and closing times
-
-    
+        ☐ Every type has certain opening and closing times    
 
     ☐ Clock that runs daycycle (maybe in different speeds)
 
 V1 -> Tower of colored cubes.
 
 GameEngine:
-    ☐ Add floor if there's a level about an added room
+    ✔ Add floor if there's a level above an added room @done(20-06-11 23:25)
 
 Every type of `build` has properties like:
     ☐ noise they generate, noise they can stand
