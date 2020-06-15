@@ -37,6 +37,8 @@
         </div>
         <div>
             <button id="add-floor" value="add-floor">Add Floor</button>
+            <button id="current-floor-down" value="down">⬇</button>
+            <button id="current-floor-up" value="up">⬆</button>
         </div>
     </div>
 
@@ -44,10 +46,8 @@
         <a-assets>
             <a-asset-item id="voxel-mtl" src="models/towar-0.mtl"></a-asset-item>
             <a-mixin id="voxel-scale" scale="0.0625 0.0625 0.0625"></a-mixin>
-            <a-mixin id="placeholder" mixin="voxel-scale" obj-model="obj: models/towar-0.obj; mtl: #voxel-mtl">
-            </a-mixin>
-            <a-mixin id="residential" obj-model="obj: models/towar-1.obj; mtl: #voxel-mtl" mixin="voxel-scale">
-            </a-mixin>
+            <a-mixin id="placeholder" mixin="voxel-scale" obj-model="obj: models/towar-0.obj; mtl: #voxel-mtl">            </a-mixin>
+            <a-mixin id="residential" obj-model="obj: models/towar-1.obj; mtl: #voxel-mtl" mixin="voxel-scale">            </a-mixin>
             <a-mixin id="commercial" obj-model="obj: models/towar-4.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
             <a-mixin id="elevator" obj-model="obj: models/towar-2.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
             <a-mixin id="addfloor" obj-model="obj: models/towar-3.obj; mtl: #voxel-mtl" mixin="voxel-scale"></a-mixin>
@@ -130,6 +130,10 @@
         <a-entity dom-click="element:#add-commercial;target:a-scene"></a-entity>
 
         <a-entity dom-click="element:#add-floor;target:#add-floor-component"></a-entity>
+
+        <a-entity dom-click="element:#current-floor-down;target:#tower"></a-entity>
+        <a-entity dom-click="element:#current-floor-up;target:#tower"></a-entity>
+        
         <a-entity id="add-floor-component" add-floor></a-entity>
 
 
@@ -151,7 +155,7 @@
         <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity>  -->
 
 
-        <a-entity tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2">
+        <a-entity id="tower" tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2">
             <a-entity floor="level:0" data-level="0"></a-entity>
         </a-entity>
 

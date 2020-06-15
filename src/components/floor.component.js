@@ -116,6 +116,8 @@ export default AFRAME.registerComponent('floor', {
                 if (room) {
                     const container = document.createElement("a-entity");
                     const roomEntity = document.createElement("a-entity");
+                    roomEntity.classList.add('voxel');
+                    roomEntity.id = room.id;
 
                     roomEntity.setAttribute("mixin", room.getMixin());
                     roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
@@ -129,6 +131,7 @@ export default AFRAME.registerComponent('floor', {
                         if (room.hasFloor) {
                             const floorEntity = document.createElement("a-entity");
                             floorEntity.setAttribute('mixin', 'floor');
+                            floorEntity.classList.add('voxel');
                             container.appendChild(floorEntity);
                         }
                     }

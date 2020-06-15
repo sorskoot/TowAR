@@ -8,7 +8,8 @@ AFRAME.registerComponent('add-floor', {
             const newFloorElement = document.createElement("a-entity");
             newFloorElement.setAttribute("floor", `level: ${this.data.level}`);
             newFloorElement.setAttribute("data-level",this.data.level);
-            tower.appendChild(newFloorElement);
+            tower.appendChild(newFloorElement);       
+            tower.setAttribute('tower',`currentLevel:${this.data.level}`);     
             this.data.level++;           
         });
     }

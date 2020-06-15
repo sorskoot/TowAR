@@ -1,7 +1,7 @@
 export class Room {
     constructor(roomtype) {
         this.roomtype = roomtype;
-        this.id = +new Date();
+        this.id = ~~(Math.random()*new Date());
     }
     getType() {return ""}
     getMixin() {
