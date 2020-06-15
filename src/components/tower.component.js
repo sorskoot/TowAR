@@ -13,7 +13,6 @@ AFRAME.registerComponent('tower', {
             const floorEl = floors[i];
             const level = +floorEl.getAttribute("data-level")
             const voxels = floorEl.querySelectorAll(".voxel");
-            console.log(voxels.length);
             if (level > this.data.currentLevel) {
                 voxels.forEach(v => v.setAttribute('transparent', 'isTransparent:true'))
             } else {
@@ -25,12 +24,15 @@ AFRAME.registerComponent('tower', {
         switch (e.detail.target.value) {
 
             case 'up':
+                //TODO: limit to top of tower
                 this.data.currentLevel++;
                 this.update();
                 break;
             case 'down':
-                this.data.currentLevel--;
-                this.update();
+                if (this.data.currentLevel > 0) {
+                    this.data.currentLevel--;
+                    this.update();
+                }
                 break;
         }
 

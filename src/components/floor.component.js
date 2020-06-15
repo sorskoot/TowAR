@@ -105,7 +105,7 @@ export default AFRAME.registerComponent('floor', {
             const floorAboveComponent = levelAboveEl.components['floor'];
             levelAboveEl.querySelectorAll("a-entity").remove();
             floorAboveComponent.addFloors();
-            floorAboveComponent.createRoomElements();
+            floorAboveComponent.createRoomElements();            
         }
     },
 
