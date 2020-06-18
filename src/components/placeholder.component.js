@@ -3,10 +3,10 @@ export default AFRAME.registerComponent('placeholder', {
     init: function () {
         this.occupied = false;
         this.el.addEventListener('dom-click', (evt) => {
-            this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
+            this.el.parentElement.emit('placeholder-change', {x:this.el.object3D.position.x,z:this.el.object3D.position.z, src:this.el});
         });
         this.el.addEventListener('click', (evt) => {
-            this.el.parentElement.emit('placeholder-change', this.el.object3D.position);
+            this.el.parentElement.emit('placeholder-change', {x:this.el.object3D.position.x,z:this.el.object3D.position.z, src:this.el});
         });
     },    
     update: function (oldData) { },

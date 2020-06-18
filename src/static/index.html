@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <a-scene webxr="optionalFeatures: dom-overlay; overlayElement: #overlay">
+    <a-scene webxr="optionalFeatures: dom-overlay; overlayElement: #overlay" background="color:#333">
         <a-assets>
             <a-asset-item id="voxel-mtl" src="models/towar-0.mtl"></a-asset-item>
             <a-mixin id="voxel-scale" scale="0.0625 0.0625 0.0625"></a-mixin>
@@ -155,8 +155,7 @@
         <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity>  -->
 
 
-        <a-entity id="tower" tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2">
-            <a-entity floor="level:0" data-level="0"></a-entity>
+        <a-entity id="tower" tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2"><a-entity floor="level:0" data-level="0"></a-entity>
         </a-entity>
 
         <a-entity wasd-controls="acceleration:35" camera look-controls="pointerLockEnabled:false;touchEnabled:true"

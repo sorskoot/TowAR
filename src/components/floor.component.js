@@ -10,7 +10,9 @@ export default AFRAME.registerComponent('floor', {
     },
 
     init: function () {
+        //this.container = document.createElement("a-entity");
         this.floor = [...Array(FLOOR_WIDTH)].map(() => [...Array(FLOOR_DEPTH)])
+        this.visibleFloor = [...Array(FLOOR_WIDTH)].map(() => [...Array(FLOOR_DEPTH)])
 
         this.currentRoomtype = ROOM_TYPE.LOBBY;
 
@@ -50,22 +52,24 @@ export default AFRAME.registerComponent('floor', {
 
 
     updateWalls() {
-        // remove all walls first maybe?
-        for (let x = 0; x < FLOOR_WIDTH; x++) {
-            for (let z = 0; z < FLOOR_DEPTH; z++) {
-                if (this.floor[x][z] &&
-                    (this.floor[x][z].roomtype === ROOM_TYPE.WALL ||
-                        this.floor[x][z].roomtype === ROOM_TYPE.FLOOR)) {
-                    this.floor[x][z] = undefined;
-                }
-            }
-        }
+        //remove all walls first maybe?
+        // for (let x = 0; x < FLOOR_WIDTH; x++) {
+        //     for (let z = 0; z < FLOOR_DEPTH; z++) {
+        //         if (this.floor[x][z] &&
+        //             (this.floor[x][z].roomtype === ROOM_TYPE.WALL ||
+        //                 this.floor[x][z].roomtype === ROOM_TYPE.FLOOR)) {
+        //             this.floor[x][z] = undefined;
+        //         }
+        //     }
+        // }
 
         for (let x = 0; x < FLOOR_WIDTH; x++) {
             for (let z = 0; z < FLOOR_DEPTH; z++) {
 
-                if (this.floor[x][z]) {
-
+                if (this.floor[x][z]
+                    && this.floor[x][z].roomtype !== ROOM_TYPE.WALL
+                    && this.floor[x][z].roomtype !== ROOM_TYPE.FLOOR
+                ) {
                     continue;
                 }
 
@@ -77,7 +81,7 @@ export default AFRAME.registerComponent('floor', {
                         if (this.floor[x + cx] &&
                             this.floor[x + cx][z + cz]
                             && this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.WALL
-                            //&& this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.FLOOR
+                            && this.floor[x + cx][z + cz].roomtype !== ROOM_TYPE.FLOOR
                         ) {
                             walltype += 1 << pp;
                         }
@@ -85,67 +89,92 @@ export default AFRAME.registerComponent('floor', {
                     }
                 }
                 if (walltype !== 0) {
-                    const wall = new Wall(walltype, this.data.level === 0)
-                    this.floor[x][z] = wall;
+
+                    if (!this.floor[x][z] || this.floor[x][z].walltype != walltype) {
+                        this.floor[x][z] = new Wall(walltype, this.data.level === 0);
+                    }
+
                 }
             }
         }
+
     },
 
     onPlaceholderChange({ detail }) {
-        this.el.querySelectorAll("a-entity").remove();
+
+        //this.el.querySelectorAll("a-entity").remove();
         this.addRoom(this.currentRoomtype, { x: detail.x, z: detail.z });
-        
+        console.log(detail.src);
+
+        // detail.src.remove();        
+
         this.updateWalls();
         this.addFloors();
+
         this.createRoomElements();
 
         const levelAboveEl = document.querySelector(`[data-level='${this.data.level + 1}']`);
         if (levelAboveEl) {
+            let x = detail.x+ ~~(FLOOR_WIDTH / 2);
+            let z = detail.z + ~~(FLOOR_DEPTH / 2);
             const floorAboveComponent = levelAboveEl.components['floor'];
-            levelAboveEl.querySelectorAll("a-entity").remove();
+            //levelAboveEl.querySelectorAll("a-entity").remove();                        
             floorAboveComponent.addFloors();
-            floorAboveComponent.createRoomElements();            
+            // if(!floorAboveComponent.floor[x][z]){
+            //     floorAboveComponent.addRoom(ROOM_TYPE.FLOOR, { x: detail.x, z: detail.z});
+            // }else{
+            //     if(floorAboveComponent.floor[x][z].roomtype === ROOM_TYPE.WALL){
+            //         floorAboveComponent.floor[x][z].hasFloor = true;
+            //     }
+            // }
+            floorAboveComponent.createRoomElements();
         }
     },
 
     createRoomElements() {
         for (let x = 0; x < FLOOR_WIDTH; x++) {
             for (let z = 0; z < FLOOR_DEPTH; z++) {
-                const room = this.floor[x][z];
-                if (room) {
-                    const container = document.createElement("a-entity");
-                    const roomEntity = document.createElement("a-entity");
-                    roomEntity.classList.add('voxel');
-                    roomEntity.id = room.id;
-
-                    roomEntity.setAttribute("mixin", room.getMixin());
-                    roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
-                    if ((room.roomtype === ROOM_TYPE.WALL && this.data.level === 0)
-                        ||
-                        ((room.roomtype === ROOM_TYPE.FLOOR ||
-                            room.hasFloor) && this.data.level !== 0)
-                    ) {
-                        container.setAttribute("placeholder", "");
-                        container.setAttribute("data-type", room.getType());
-                        if (room.hasFloor) {
-                            const floorEntity = document.createElement("a-entity");
-                            floorEntity.setAttribute('mixin', 'floor');
-                            floorEntity.classList.add('voxel');
-                            container.appendChild(floorEntity);
-                        }
+                if (this.floor[x][z] &&
+                    //this.floor[x][z] === this.visibleFloor[x][z] &&
+                    this.floor[x][z].id !== this.visibleFloor[x][z]?.id) {
+                    
+                    if (this.visibleFloor[x][z]) {
+                        document.getElementById(this.visibleFloor[x][z].id)?.parentEl.remove();
                     }
-                    container.appendChild(roomEntity);
-                    container.setAttribute("position", {
-                        x: x - ~~(FLOOR_WIDTH / 2),
-                        y: this.data.level * .5,
-                        z: z - ~~(FLOOR_DEPTH / 2)
-                    });
-                    this.el.appendChild(container);
+                    const room = this.floor[x][z];
+                    if (room) {
+                        const container = document.createElement("a-entity");
+                        const roomEntity = document.createElement("a-entity");
+                        roomEntity.classList.add('voxel');
+                        roomEntity.id = room.id;
+                        roomEntity.setAttribute("mixin", room.getMixin());
+                        roomEntity.setAttribute("rotation", { x: 0, z: 0, y: room.getRotation() });
+                        if ((room.roomtype === ROOM_TYPE.WALL && this.data.level === 0)
+                            ||
+                            ((room.roomtype === ROOM_TYPE.FLOOR ||
+                                room.hasFloor) && this.data.level !== 0)
+                        ) {
+                            container.setAttribute("placeholder", "");
+                            container.setAttribute("data-type", room.getType());
+                            if (room.hasFloor) {
+                                const floorEntity = document.createElement("a-entity");
+                                floorEntity.setAttribute('mixin', 'floor');
+                                floorEntity.classList.add('voxel');
+                                container.appendChild(floorEntity);
+                            }
+                        }
+                        container.appendChild(roomEntity);
+                        container.setAttribute("position", {
+                            x: x - ~~(FLOOR_WIDTH / 2),
+                            y: this.data.level * .5,
+                            z: z - ~~(FLOOR_DEPTH / 2)
+                        });
+                        this.el.appendChild(container);
+                    }
                 }
             }
         }
-
+        this.visibleFloor = JSON.parse(JSON.stringify(this.floor));
     },
 
     addRoom(roomtype, pos) {
@@ -165,18 +194,14 @@ export default AFRAME.registerComponent('floor', {
             for (let x = 0; x < FLOOR_WIDTH; x++) {
                 for (let z = 0; z < FLOOR_DEPTH; z++) {
 
-                    // if (this.floor[x][z] &&
-                    //     this.floor[x][z].roomtype === ROOM_TYPE.WALL) {
-                    //     wall.hasFloor = true;
-                    // }
-
                     if (floorbelow[x][z] &&
                         (floorbelow[x][z].roomtype !== ROOM_TYPE.WALL &&
                             floorbelow[x][z].roomtype !== ROOM_TYPE.FLOOR)) {
                         if (!this.floor[x][z]) {
                             this.addRoom(ROOM_TYPE.FLOOR, { x: x - ~~(FLOOR_WIDTH / 2), z: z - ~~(FLOOR_DEPTH / 2) });
-                        }else{
-                            if(this.floor[x][z].roomtype === ROOM_TYPE.WALL){
+                        } else {
+                            if (this.floor[x][z].roomtype === ROOM_TYPE.WALL && !this.floor[x][z].hasFloor) {
+                                this.floor[x][z] = new Wall(this.floor[x][z].walltype, false);
                                 this.floor[x][z].hasFloor = true;
                             }
                         }

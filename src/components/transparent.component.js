@@ -7,6 +7,7 @@ AFRAME.registerComponent('transparent', {
 
     update: function (oldData) {
         var mesh = this.el.getObject3D('mesh');
+        if(!mesh) return;
         mesh.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 child.material.transparent = this.data.isTransparent;
