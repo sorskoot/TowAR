@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>TowAR</title>
-    <script src="aframe-master.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1f00d0beadf87bad7d275c174616e048f8b573fc/dist/aframe-master.min.js"></script>
     <script src="main.js"></script>
     <style>
         #overlay {
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <a-scene webxr="optionalFeatures: dom-overlay; overlayElement: #overlay" background="color:#333">
+    <a-scene game webxr="overlayElement: #overlay;referenceSpaceType:local-floor;requiredFeatures:local-floor,hit-test,dom-overlay" background="color:#333">
         <a-assets>
             <a-asset-item id="voxel-mtl" src="models/towar-0.mtl"></a-asset-item>
             <a-mixin id="voxel-scale" scale="0.0625 0.0625 0.0625"></a-mixin>
@@ -136,26 +136,9 @@
         
         <a-entity id="add-floor-component" add-floor></a-entity>
 
+        <a-ring id="hit-test" hit-test show-in-ar color="rgb(54,86,60)" rotation="-90 0 0" radius-inner=".1" radius-outer=".15"></a-ring>
 
-        <!-- <a-entity mixin="wall-straight-ground" position="-5 0 -4"></a-entity>
-        <a-entity mixin="wall-straight" position="-5 .5 -4"></a-entity>
-        <a-entity mixin="wall-corner-ground" position="-5 0 -5"></a-entity>
-        <a-entity mixin="wall-corner" position="-5 .5 -5"></a-entity>
-        <a-entity mixin="wall-corner2-ground" position="-5 0 -6"></a-entity>
-        <a-entity mixin="wall-corner2" position="-5 .5 -6"></a-entity>-->
-        <!-- <a-entity mixin="wall-straight2-corner-mirror-ground" position="-5 0 -7"></a-entity>
-        <a-entity mixin="wall-straight2-corner-mirror" position="-5 .5 -7"></a-entity>
-        <a-entity mixin="wall-straight2-corner-ground" position="-5 0 -8"></a-entity>
-        <a-entity mixin="wall-straight2-corner" position="-5 .5 -8"></a-entity>
-        <a-entity mixin="wall-straight-corner2-ground" position="-5 0 -3"></a-entity>
-        <a-entity mixin="wall-straight-corner2" position="-5 .5 -3"></a-entity>
-        <a-entity mixin="wall-straight-corner-mirror-ground" position="-5 0 -2"></a-entity>
-        <a-entity mixin="wall-straight-corner-mirror" position="-5 0.5 -2"></a-entity>-->
-        <!-- <a-entity mixin="wall-corner-opposite-ground" position="-5 0 -1"></a-entity>
-        <a-entity mixin="wall-corner-opposite" position="-5 0.5 -1"></a-entity>  -->
-
-
-        <a-entity id="tower" tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2"><a-entity floor="level:0" data-level="0"></a-entity>
+        <a-entity hide-in-ar id="tower" tower scale=".5 .5 .5" rotation="0 180 0" position="0 .5 -2"><a-entity floor="level:0" data-level="0"></a-entity>
         </a-entity>
 
         <a-entity wasd-controls="acceleration:35" camera look-controls="pointerLockEnabled:false;touchEnabled:true"

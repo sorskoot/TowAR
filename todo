@@ -61,10 +61,10 @@ Every type of `build` has properties like:
     
 Overall Gameplay:
     Brower specific:
-    AR specific:
-        
-        ☐ Detect when getting into AR mode
-        ☐ User hit-test to place tower when entering AR
+    AR specific:        
+        ✔ Detect when getting into AR mode @done(20-07-09 23:19)
+        ✔ User hit-test to place tower when entering AR @done(20-07-09 23:19)
+        ☐ Nice error handling when hit-test or dom-overlay are not supported
     VR specific:  
         ☐ Rotate the tower
     
